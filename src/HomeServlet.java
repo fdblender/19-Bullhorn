@@ -44,19 +44,28 @@ public class HomeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		List<Bhpost> posts = null;
 		// get the current user from the session
 		HttpSession session = request.getSession();
-		Bhuser user = (Bhuser) session.getAttribute("user");	
-		Long userid = user.getBhuserid();
+		//Bhuser user = (Bhuser) session.getAttribute("user");	
+		//Long userid = user.getBhuserid();
 		
-		System.out.println("HomeServlet: "+userid);
-
-		List<Bhpost> posts = null;
-
-		if (userid != null) {
+		/*String userid = session.getAttribute("userid"));		
+		Long userid = Long.parseLong((String) session.getAttribute("userid"));
+		*/
+		
+		Bhuser user = (Bhuser) session.getAttribute("user");	
+		if (user != null) {
+			Long userid = user.getBhuserid();		
+		
+			System.out.println("HomeServlet: "+userid);			
+		
 			// get the posts for this user
+			
 			posts = DbBullhorn.postsofUser(userid);
 			System.out.println("HomeServlet: retrieved posts for user"+userid);
+		} else {
+			System.out.println("HomeServlet: no user found");			
 		}
 
 		// save the posts for this user in the session attributes		

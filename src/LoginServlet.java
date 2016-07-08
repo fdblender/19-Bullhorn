@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         String userpassword = request.getParameter("password");
        // String action = request.getParameter("action");
         //String remember = request.getParameter("remember");
-        String action = request.getParameter("submit");
+        String action = request.getParameter("action");
         String nextURL = "/error.jsp";
         
         //get an instance of the session so we can set attributes to it
@@ -53,10 +53,12 @@ public class LoginServlet extends HttpServlet {
         //only add the user to the session if the user if valid.
         //The presence of the user is used to determine who 
         //owns the site and will be used to connect to the database
+        
+        System.out.println("LoginServlet action: "+action);
         if (action.equals("logout")){
         	System.out.println("LoginServlet: action=logout");
             session.invalidate();
-            nextURL = "/BHlogin.jsp";
+            nextURL = "/BHlogin.html";
             
         }else{
             user = DbUser.getUserByEmail(useremail);

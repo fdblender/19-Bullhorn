@@ -50,7 +50,7 @@ public class PostServlet extends HttpServlet {
 		Bhuser user = (Bhuser) session.getAttribute("user");	
 		
 		if (session.getAttribute("user")==null) {
-			String nextURL = "/login.jsp";
+			String nextURL = "/BHlogin.jsp";
 			session.invalidate();
 			response.sendRedirect(request.getContextPath() + nextURL);;
 			return;
@@ -62,14 +62,17 @@ public class PostServlet extends HttpServlet {
 			System.out.println("PostServlet: post text is: " + posttext);			
 			
 			// set the post date
-			Date date = new Date();
+			Date today = new Date();
 			SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 			try {
-				date = fmt.parse("2015-07-07");
+				String strTime = fmt.format(today);
+				today = fmt.parse(strTime);
+				//date = fmt.parse("2015-07-07");
 			} catch (Exception e) {
-				
-			}
-			post.setPostdate(date);			
+				System.out.println(e);
+			}			
+		    
+			post.setPostdate(today);			
 			post.setPosttext(posttext.trim());
 			post.setBhuser(user);
 			

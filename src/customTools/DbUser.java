@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
@@ -23,7 +24,7 @@ public class DbUser {
 		long userid;
 		
 
-		table.append("<table>");
+		table.append("<table>");// get gravatar        
 		table.append("<tr><th>User</th><th>Post</th><th>Date</th></tr>");
 		
 		for (Bhpost post : posts) {
@@ -98,6 +99,49 @@ public class DbUser {
 		}
 
 		return result;
+	}
+	
+	 public static void update(Bhuser bhuser) {
+	        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+	        EntityTransaction trans = em.getTransaction();
+	        try {
+	            trans.begin();
+	            em.merge(bhuser);
+	            trans.commit();
+	        } catch (Exception e) {
+	            trans.rollback();
+	        } finally {
+	            em.close();
+	        }
+	    }
+
+	
+	public static Bhuser updateUser(String curremail, String newemail, 
+			String newpassword, String newmotto) {
+		
+		Bhuser user = null;
+		// get the user object from the database
+		user = getUserByEmail(curremail);
+		
+		// set user fields to the new values
+				
+		if (newemail != null) {
+			user.setUseremail(newemail);
+		}
+		if (newpassword != null) {
+			user.setUserpassword(newpassword);
+		}
+		if (newmotto != null) {
+			user.setMotto(newmotto);
+		}
+		
+		// update the user record in the database
+		update(user);
+		
+		user = getUserByEmail(curremail);
+		
+		return user;
+		
 	}
 	
 	public static String getGravatarURL(String useremail, int size) {

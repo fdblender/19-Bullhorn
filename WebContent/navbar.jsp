@@ -43,15 +43,23 @@
 						
 				<!-- display the gravatar and the user email -->		
 				<% if (session.getAttribute("user") != null) { %>
-					<li><a href="ProfileServlet?useremail=${user.useremail}&action=viewprofile"><img alt="${user.username}" src="${gravatarURL}"/>&nbsp;${user.username}</a></li>
+					<!--<li><c:out value="${user.username}" /></li>	-->	
+					
+					 <li><a href="ProfileServlet?useremail=${user.useremail}&action=viewprofile"><img alt="${user.username}" src="${gravatarURL}"/>&nbsp;${user.username}</a></li> 				
+			
  				<% } %>				
 				
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">User Actions<span class="caret"></span></a>
 					<ul class="dropdown-menu">
+						
 						<li><a href="Newsfeed?userid=${user.bhuserid}">Show My Posts</a></li>
-						<li><a href="profile.jsp">Edit My Profile</a></li>						
+						
+						<!--<li><a href="ProfileServlet?action=edit">Edit My Profile</a></li>-->						
+						<li><a href="profile.jsp">Edit My Profile</a></li>
+						
+						
 						<li><a href="feedback.jsp">Feedback</a></li>
 						<li role="separator" class="divider"></li>
 						<li>
